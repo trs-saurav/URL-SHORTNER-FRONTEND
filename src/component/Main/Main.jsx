@@ -1,54 +1,163 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Main = () => {
-  const { register, handleSubmit } = useForm(); 
-  const [returnedData, setReturnedData] = useState(""); 
+  const { register, handleSubmit } = useForm();
+  const [returnedData, setReturnedData] = useState("");
+  const [prevData, setPrevData] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const returned = "SHORTEN LINK" 
+  const returned = "SHORTEN LINK";
 
-  const onSubmit = (data) => {
-    setReturnedData(data.inputField)
-    console.log(data); 
+  const onSubmit = async (data) => {
+    const url = "http://localhost:8001/api/url";
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({ url: data.url }).toString(),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      setReturnedData(
+        "http://localhost:8001/" + json.id || "Failed to generate link"
+      );
+      console.log(json);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const deleteREq = async (d) => {
+    fetch(`http://localhost:8001/api/url/${d}`, { method: "DELETE" }).then(() =>
+      this.setState({ status: "Delete successful" })
+    );
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:8001/api/url/data`)
+      .then((res) => res.json())
+      .then((data) => setPrevData(data));
+  }, [onSubmit]);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(returnedData); 
+    navigator.clipboard.writeText(returnedData);
   };
 
+  const safePrevData = Array.isArray(prevData) ? prevData : [];
+
   return (
-    <div className="p-8 font-sans w-screen h-screen  flex flex-col justify-center items-center ">
-      <div className="flex flex-col border-2 justify-center items-center w-[35rem] h-auto py-8">
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 w-[90%] p-4 border border-gray-300 rounded bg-gray-100 flex items-center ">
-              <div className="w-[90%]" >
-                <label htmlFor="inputField" className="block text-gray-700 font-medium mb-2">
-                  Enter URL:
-                </label>
-                <input id="inputField" name="inputField"  type="text"
-                  {...register("inputField", { required: true })}
-                    className="w-[90%] p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <button
-                type="submit"
-                className=" text-white w-[20%] h-[95%] font-bold text-3xl py-2 px-4 rounded bg-orange-700 hover:bg-orange-500"
-              >
-                GO
-              </button>
-      </form>
-      
-      
-      <div className="mt-6 w-[90%] p-4 border border-gray-300 rounded bg-gray-100 flex items-center">
-          <input id="returnedData" type="text" value={returnedData || returned} readOnly
+    <div className="p-8 font-sans flex-wrap w-full h-screen bg-gray-50 flex flex-row gap-8 justify-center items-start ">
+      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center w-[35rem] h-auto p-8">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-6 w-full p-6 border border-gray-200 rounded bg-gray-100 flex flex-col items-start gap-4"
+        >
+          <div className="w-full">
+            <label
+              htmlFor="inputField"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Enter URL:
+            </label>
+            <input
+              id="inputField"
+              name="inputField"
+              type="text"
+              {...register("url", { required: true })}
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-3 mt-2 text-white text-lg font-bold rounded bg-orange-700 hover:bg-orange-500"
+          >
+            GO
+          </button>
+        </form>
+
+        <div className="mt-6 w-full p-4 border border-gray-200 rounded bg-gray-100 flex items-center">
+          <input
+            id="returnedData"
+            type="text"
+            value={returnedData || returned}
+            readOnly
             className="flex-grow p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button onClick={copyToClipboard} className="ml-4 bg-orange-700 over:bg-orange-500 text-white py-2 px-4 rounded " >
+          <button
+            onClick={copyToClipboard}
+            className="ml-4 bg-orange-700 hover:bg-orange-500 text-white py-2 px-4 rounded"
+          >
             Copy
-      </button>
-
+          </button>
+        </div>
       </div>
-      </div>
 
+      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-start items-center w-[35rem] max-h-[40rem] p-8 gap-2 overflow-y-auto">
+        <input
+          type="text"
+          className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+          placeholder="Search URL..."
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <div>Generated URLs</div>
+
+        {safePrevData
+          .filter((item) =>
+            item.redirectURL.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          .map((item) => (
+            <div className="flex flex-col border border-gray-300 rounded-lg p-6 w-full bg-gray-100 gap-4">
+              {/* Original URL */}
+              <div className="flex justify-between items-center">
+                <span className="font-bold text-gray-700">Original URL:</span>
+                <span className="text-gray-600">{item.redirectURL}</span>
+              </div>
+
+              {/* Total Clicks */}
+              <div className="flex justify-between items-center">
+                <span className="font-bold text-gray-700">Total Clicks:</span>
+                <span className="text-gray-600">
+                  {item.visitHistory.length}
+                </span>
+              </div>
+
+              {/* Input Box and Button */}
+              <div className="flex items-center gap-4">
+                <input
+                  type="text"
+                  className="flex-grow border rounded-lg p-2 text-gray-700"
+                  value={`http://localhost:8001/${item.shortId}`}
+                  readOnly
+                />
+                <button
+                  onClick={() =>
+                    navigator.clipboard.writeText(
+                      `http://localhost:8001/${item.shortId}`
+                    )
+                  }
+                  className="bg-orange-700 hover:bg-orange-500 text-white px-4 py-2 rounded-lg"
+                >
+                  Copy
+                </button>
+                <button
+                  onClick={() => deleteREq(item.shortId)}
+                  className="bg-orange-700 hover:bg-orange-500 text-white px-4 py-2 rounded-lg"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

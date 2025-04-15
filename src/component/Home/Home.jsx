@@ -1,4 +1,5 @@
 import React from 'react'
+import urlBanner from '../../assets/urlBanner.png';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
@@ -22,7 +23,7 @@ export default function Home() {
                 </div>
 
                 <div className=" w-[80rem] ">
-                    <img className="w-96" src=".\src\assets\ImageRaccourcisseurURL.png" alt="image1" />
+                    <img className="w-fit" src={urlBanner} alt="image1" />
                 </div>
         </div>
     );
