@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import udLogo from '../../assets/udLogo.png';
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,7 @@ export default function Header() {
                     {/* Logo */}
                     <Link to="/" className="flex items-center">
                         <img
-                            src="./src/assets/WhatsApp Image 2025-04-06 at 18.25.48_ff3fbf07.png"
+                            src={udLogo}
                             className="mr-3 h-12"
                             alt="Logo"
                         />
