@@ -54,7 +54,7 @@ const Main = () => {
   const safePrevData = Array.isArray(prevData) ? prevData : [];
 
   return (
-    <div className="p-8 font-sans w-full h-screen bg-gray-50 flex flex-wrap flex-col flex-row gap-8 justify-center items-center md:items-start">
+    <div className="p-8 font-sans w-full h-screen bg-gray-50 flex flex-wrap  flex-row gap-8 justify-center items-center md:items-start">
       
       {/* First Div */}
       <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center  w-full max-w-[30rem] h-auto p-8 flex-shrink-0">
