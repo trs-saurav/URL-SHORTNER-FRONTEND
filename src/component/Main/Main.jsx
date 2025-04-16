@@ -10,7 +10,7 @@ const Main = () => {
   const returned = "";
 
   const onSubmit = async (data) => {
-    const url = "http://localhost:8001/api/url";
+    const url = "https://urldummy.onrender.com/api/url";
 
     try {
       const response = await fetch(url, {
@@ -27,7 +27,7 @@ const Main = () => {
 
       const json = await response.json();
       setReturnedData(
-        "http://localhost:8001/" + json.id || "Failed to generate link"
+        "https://urldummy.onrender.com/" + json.id || "Failed to generate link"
       );
       console.log(json);
     } catch (error) {
@@ -36,13 +36,13 @@ const Main = () => {
   };
 
   const deleteREq = async (d) => {
-    fetch(`http://localhost:8001/api/url/${d}`, { method: "DELETE" }).then(() =>
+    await fetch(`https://urldummy.onrender.com/api/url/${d}`, { method: "DELETE" }).then(() =>
       this.setState({ status: "Delete successful" })
     );
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8001/api/url/data`)
+    fetch(`https://urldummy.onrender.com/api/url/data/`)
       .then((res) => res.json())
       .then((data) => setPrevData(data));
   }, [onSubmit]);
@@ -139,13 +139,13 @@ const Main = () => {
                 <input
                   type="text"
                   className="flex-grow border rounded-lg p-2 text-gray-700"
-                  value={`http://localhost:8001/${item.shortId}`}
+                  value={`https://urldummy.onrender.com/${item.shortId}`}
                   readOnly
                 />
                 <button
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      `http://localhost:8001/${item.shortId}`
+                      `https://urldummy.onrender.com/${item.shortId}`
                     )
                   }
                   className="bg-orange-700 hover:bg-orange-500 text-white px-4 py-2 rounded-lg"
