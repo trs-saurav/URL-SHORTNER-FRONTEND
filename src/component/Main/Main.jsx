@@ -7,7 +7,7 @@ const Main = () => {
   const [prevData, setPrevData] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
-  const returned = "SHORTEN LINK";
+  const returned = "";
 
   const onSubmit = async (data) => {
     const url = "http://localhost:8001/api/url";
@@ -54,8 +54,10 @@ const Main = () => {
   const safePrevData = Array.isArray(prevData) ? prevData : [];
 
   return (
-    <div className="p-8 font-sans flex-wrap w-full h-screen bg-gray-50 flex flex-row gap-8 justify-center items-start ">
-      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center sm:w-[25rem] md:w-[30rem] h-auto p-8">
+    <div className="p-8 font-sans w-full h-screen bg-gray-50 flex flex-wrap flex-col flex-row gap-8 justify-center items-center md:items-start">
+      
+      {/* First Div */}
+      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center  w-full max-w-[30rem] h-auto p-8 flex-shrink-0">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-6 w-full p-6 border border-gray-200 rounded bg-gray-100 flex flex-col items-start gap-4"
@@ -72,7 +74,7 @@ const Main = () => {
               name="inputField"
               type="text"
               {...register("url", { required: true })}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
           <button
@@ -82,34 +84,38 @@ const Main = () => {
             GO
           </button>
         </form>
-
-        <div className="mt-6 w-full p-4 border border-gray-200 rounded bg-gray-100 flex items-center">
+  
+        <div className="mt-6 w-full p-4 border border-gray-200 rounded bg-gray-100 flex flex-wrap gap-1 items-center">
           <input
             id="returnedData"
             type="text"
             value={returnedData || returned}
+            placeholder="Short link appears here..."
             readOnly
-            className="flex-grow p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
           <button
             onClick={copyToClipboard}
-            className="ml-4 bg-orange-700 hover:bg-orange-500 text-white py-2 px-4 rounded"
+            className="w-full py-3 mt-2 text-white text-lg font-bold rounded bg-orange-700 hover:bg-orange-500"
           >
             Copy
           </button>
         </div>
       </div>
-
-      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center sm:w-[25rem] md:w-[30rem] h-auto p-8  overflow-y-auto">
+  
+      {/* Second Div */}
+      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center w-full max-w-[30rem] h-auto p-8 overflow-y-auto flex-shrink-0">
         <input
           type="text"
           className="border border-gray-300 rounded-lg p-2 w-full mb-4"
           placeholder="Search URL..."
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-
-        <div>Generated URLs</div>
-
+  
+        <div className="text-lg font-semibold text-gray-700 mb-2">
+          Generated URLs
+        </div>
+  
         {safePrevData
           .filter((item) =>
             item.redirectURL.toLowerCase().includes(searchTerm.toLowerCase())
@@ -121,16 +127,14 @@ const Main = () => {
                 <span className="font-bold text-gray-700">Original URL:</span>
                 <span className="text-gray-600">{item.redirectURL}</span>
               </div>
-
+  
               {/* Total Clicks */}
               <div className="flex justify-between items-center">
                 <span className="font-bold text-gray-700">Total Clicks:</span>
-                <span className="text-gray-600">
-                  {item.visitHistory.length}
-                </span>
+                <span className="text-gray-600">{item.visitHistory.length}</span>
               </div>
-
-              {/* Input Box and Button */}
+  
+              {/* Input Box and Buttons */}
               <div className="flex items-center gap-4">
                 <input
                   type="text"
@@ -160,6 +164,7 @@ const Main = () => {
       </div>
     </div>
   );
+
 };
 
 export default Main;
