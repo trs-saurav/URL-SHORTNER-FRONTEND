@@ -55,7 +55,7 @@ const Main = () => {
 
   return (
     <div className="p-8 font-sans flex-wrap w-full h-screen bg-gray-50 flex flex-row gap-8 justify-center items-start ">
-      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center w-[30rem] h-auto p-8">
+      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center sm:w-[25rem] md:w-[30rem] h-auto p-8">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-6 w-full p-6 border border-gray-200 rounded bg-gray-100 flex flex-col items-start gap-4"
@@ -100,7 +100,7 @@ const Main = () => {
         </div>
       </div>
 
-      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center w-[30rem] h-auto p-8  overflow-y-auto">
+      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white justify-center items-center sm:w-[25rem] md:w-[30rem] h-auto p-8  overflow-y-auto">
         <input
           type="text"
           className="border border-gray-300 rounded-lg p-2 w-full mb-4"
