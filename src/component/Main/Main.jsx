@@ -105,7 +105,7 @@ const Main = () => {
       </div>
   
       {/* Second Div */}
-      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white items-center  w-full max-w-[30rem] h-[40rem] overflow-y-auto p-8  flex-shrink-0">
+      <div className="flex flex-col border-2 border-gray-300 rounded-lg shadow-md bg-white items-center  w-full max-w-[30rem] h-[40rem] overflow-y-auto p-8 mb-5 flex-shrink-0">
         <input
           type="text"
           className="border border-gray-300 rounded-lg p-2 w-full mb-4"
