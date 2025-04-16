@@ -122,21 +122,21 @@ const Main = () => {
             item.redirectURL.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .map((item) => (
-            <div className="flex flex-col border border-gray-300 rounded-lg p-6 w-full bg-gray-100 gap-4">
+            <div className="flex flex-col border border-gray-300 rounded-lg p-6 w-full mb-5 bg-gray-100 gap-4">
               {/* Original URL */}
-              <div className="flex justify-between items-center">
-                <span className="font-bold text-gray-700">Original URL:</span>
-                <span className="text-gray-600">{item.redirectURL}</span>
+              <div className="flex justify-between items-center gap-0.5 flex-wrap">
+                <span className="font-bold text-gray-700 overflow-hidden">Original URL:</span>
+                <span className="text-gray-600 overflow-hidden">{item.redirectURL}</span>
               </div>
   
               {/* Total Clicks */}
-              <div className="flex justify-between items-center">
-                <span className="font-bold text-gray-700">Total Clicks:</span>
-                <span className="text-gray-600">{item.visitHistory.length}</span>
+              <div className="flex justify-between items-center flex-wrap overflow-hidden">
+                <span className="font-bold text-gray-700 overflow-hidden">Total Clicks:</span>
+                <span className="text-gray-600 overflow-hidden">{item.visitHistory.length}</span>
               </div>
   
               {/* Input Box and Buttons */}
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-4 overflow-hidden">
                 <input
                   type="text"
                   className="flex-grow border rounded-lg p-2 text-gray-700"
