@@ -6,6 +6,7 @@ import Main from "./component/Main/Main.jsx";
 import Login from "./component/login/Login.jsx";
 import Signup from "./component/login/Signup.jsx";
 import LoginLayout from "./component/Layout/LoginLayout.jsx";
+import NotFound from "./component/NotFounf/NotFound.jsx";
 
 
 const router = createBrowserRouter(
@@ -24,6 +25,8 @@ const router = createBrowserRouter(
         <Route path="login" element={<Login/>} /> 
         <Route path="sign-up" element={<Signup/>} />
       </Route>
+
+      <Route path="*" element={<NotFound/>} />
       
 
     </>
