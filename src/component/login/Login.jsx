@@ -12,11 +12,36 @@ function Login() {
     formState: { errors },
   } = useForm();
 
+  const [name, setName] = React.useState("");
+
   const password = watch("password");
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const url = import.meta.env.VITE_URL || "http://localhost:8001/";
+
+const onSubmit = async (data) => {
+    try {
+        const response = await fetch(url + "api/user/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({ email: data.email, password: data.password }).toString(),
+            credentials: "include",
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(errorData.error || "Invalid email or password");
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        console.log("Login Successful");
+
+        window.location.href = "/";
+    } catch (error) {
+        console.error("Login Error:", error);
+    }
+};
 
   return (
     <div className='flex justify-center items-center'>

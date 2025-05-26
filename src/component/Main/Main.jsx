@@ -9,7 +9,7 @@ const Main = () => {
 
   const returned = "";
 
-  const url = "https://urldummy.onrender.com/";
+  const url = import.meta.env.VITE_URL || "http://localhost:8001/";
 
   const onSubmit = async (data) => {
 
