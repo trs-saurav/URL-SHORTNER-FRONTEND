@@ -7,6 +7,7 @@ import Login from "./component/login/Login.jsx";
 import Signup from "./component/login/Signup.jsx";
 import LoginLayout from "./component/Layout/LoginLayout.jsx";
 import NotFound from "./component/NotFounf/NotFound.jsx";
+import Contact from "./component/contact/Contact.jsx";
 
 
 const router = createBrowserRouter(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Layout />}>
         <Route path="" element={<Home />} /> 
         <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact/>} />
       </Route>
 
       {/* Standalone route for /short */}
