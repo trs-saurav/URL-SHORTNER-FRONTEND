@@ -23,8 +23,7 @@ const Contact = () => {
     from_number: number,
     from_contact: contact
     };
-
-    setTimeout(() => setDisabled(false), 5000);
+    setDisabled(true);
     
     await emailjs
       .send(serviceId, templateId, templateParams, publicKey)
@@ -35,6 +34,7 @@ const Contact = () => {
         setNumber("");
         setContact("");
         alert("thank you for contacting us! We will get back to you soon.");
+        setTimeout(() => setDisabled(false), 5000);
       })
 
       .catch((error) => {
