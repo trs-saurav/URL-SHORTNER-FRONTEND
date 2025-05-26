@@ -24,6 +24,7 @@ const Contact = () => {
     from_contact: contact
     };
 
+    setTimeout(() => setDisabled(false), 5000);
     
     await emailjs
       .send(serviceId, templateId, templateParams, publicKey)
@@ -34,7 +35,6 @@ const Contact = () => {
         setNumber("");
         setContact("");
         alert("thank you for contacting us! We will get back to you soon.");
-        setTimeout(() => setDisabled(false), 5000);
       })
 
       .catch((error) => {
@@ -45,13 +45,13 @@ const Contact = () => {
 
   return (
     <form ref={form} onSubmit={handleSubmit} className="flex flex-col gap-4 p-6  rounded-lg shadow-md max-w-md mx-auto my-12">
-      <label htmlFor="name" className="text-lg font-medium">NAME</label>
+      <label htmlFor="name" className="text-lg font-medium">NAME:</label>
       <input type="text" id="name" required value={name} onChange={(e) => setName(e.target.value)} className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-orange-500" />
 
-      <label htmlFor="email" className="text-lg font-medium">EMAIL</label>
+      <label htmlFor="email" className="text-lg font-medium">EMAIL:</label>
       <input type="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-orange-500" />
 
-      <label htmlFor="number" className="text-lg font-medium">MOBILE NO</label>
+      <label htmlFor="number" className="text-lg font-medium">MOBILE NO.:</label>
       <input type="tel" pattern="[0-9]{10}" id="number" placeholder="Enter without 0 and country code"required value={number} onChange={(e) => setNumber(e.target.value)} className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-orange-500" style={{ appearance: "textfield" }} />
 
       <label htmlFor="contact" className="text-lg font-medium">CONTACT</label>
